@@ -1,6 +1,4 @@
-import weather from "./weather.json";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Info from "./components/Info";
 import {
   AnimatedAxis,
@@ -19,11 +17,10 @@ function App() {
   const [currentWeather, setCurrentWeather] = useState([]);
   const [forecast, setForecast] = useState([]);
 
-  const weatherUrl =
-    "https://api.openweathermap.org/data/2.5/weather?q=new%20york&units=metric&appid=2b6491a394d35f11eeecb6f332ffa009";
-  const forecastUrl =
-    "https://api.openweathermap.org/data/2.5/onecall?lat=40.71&lon=-74&units=metric&exclude=minutely,hourly&appid=2b6491a394d35f11eeecb6f332ffa009";
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=new%20york&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
+  const forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=40.71&lon=-74&units=metric&exclude=minutely,hourly&appid=${process.env.REACT_APP_API_KEY}`;
 
+  console.log(process.env.REACT_APP_API_KEY);
   useEffect(() => {
     fetch(weatherUrl)
       .then((res) => res.json())
@@ -32,7 +29,7 @@ function App() {
     fetch(forecastUrl)
       .then((res) => res.json())
       .then((data) => setForecast(data));
-  }, []);
+  }, [weatherUrl, forecastUrl]);
 
   const days = {
     0: "Sunday",
@@ -115,7 +112,7 @@ function App() {
     weatherAccessor: (d) => d.weather,
   };
 
-  console.log(forecast.daily);
+  // console.log(forecast.daily);
 
   return (
     <main className='grid font-overpass text-white'>
@@ -130,25 +127,27 @@ function App() {
           >
             &gt;
           </button>
-          <article>
-            <article className='flex font-extralight -mb-36 divide-x-2'>
-              <h2 className='flex pr-2'>
-                {Math.round(currentWeather.main.temp_min)}{" "}
-                <span className='text-xs'>°</span>
-              </h2>
-              <h2 className='flex pl-2'>
-                {Math.round(currentWeather.main.temp_max)}{" "}
-                <span className='text-xs'>°</span>
-              </h2>
+          {currentWeather && currentWeather.main && (
+            <article>
+              <article className='flex font-extralight -mb-36 divide-x-2'>
+                <h2 className='flex pr-2'>
+                  {Math.round(currentWeather.main.temp_min)}{" "}
+                  <span className='text-xs'>°</span>
+                </h2>
+                <h2 className='flex pl-2'>
+                  {Math.round(currentWeather.main.temp_max)}{" "}
+                  <span className='text-xs'>°</span>
+                </h2>
+              </article>
+              <h1 className='flex text-8xl lg:text-9xl font-bold mt-40'>
+                {Math.round(currentWeather.main.temp)}{" "}
+                <span className='text-xl'>°C</span>
+              </h1>
+              <p className='text-xl font-semibold'>
+                NOW IN {currentWeather.name.toUpperCase()}, USA
+              </p>
             </article>
-            <h1 className='flex text-8xl lg:text-9xl font-bold mt-40'>
-              {Math.round(currentWeather.main.temp)}{" "}
-              <span className='text-xl'>°C</span>
-            </h1>
-            <p className='text-xl font-semibold'>
-              NOW IN {currentWeather.name.toUpperCase()}, USA
-            </p>
-          </article>
+          )}
           <button
             className='text-xs lg:text-base font-bold mt-12 lg:mt-28 lg:mb-36 py-3 px-5 mx-auto hover:bg-gray-300 bg-white text-black text-opacity-80 rounded-full'
             onClick={() => setOpenMoreInfo(!openMoreInfo)}
