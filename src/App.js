@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Info from "./components/Info";
 import {
   AnimatedAxis,
@@ -16,7 +16,6 @@ function App() {
   const [showForecast, setShowForecast] = useState(false);
   const [currentWeather, setCurrentWeather] = useState([]);
   const [forecast, setForecast] = useState([]);
-  const infoRef = useRef();
 
   const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=new%20york&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
   const forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=40.71&lon=-74&units=metric&exclude=minutely,hourly&appid=${process.env.REACT_APP_API_KEY}`;
@@ -121,21 +120,32 @@ function App() {
             </article>
           )}
           <button
-            ref={infoRef}
             className='text-xs lg:text-base font-bold mt-12 lg:mt-28 lg:mb-36 py-3 px-5 mx-auto hover:bg-gray-300 bg-white text-black text-opacity-80 rounded-full'
             onClick={() => {
               setOpenMoreInfo(!openMoreInfo);
-              infoRef.current.scrollIntoView({ behavior: "smooth" });
+              if (openMoreInfo) {
+                window.scrollTo({
+                  left: 0,
+                  top: 0,
+                  behavior: "smooth",
+                });
+              } else
+                window.scrollTo({
+                  left: 0,
+                  top: window.innerHeight,
+                  behavior: "smooth",
+                });
             }}
           >
             SHOW {openMoreInfo ? "LESS" : "MORE"}
           </button>
         </section>
       )}
-      {openMoreInfo && currentWeather && (
+      {currentWeather && currentWeather.wind && (
         <section
-          ref={infoRef}
-          className='grid md:grid-cols-2 text-base text-black p-10 md:px-20 lg:px-32 xl:px-44 gap-5'
+          className={`grid md:grid-cols-2 text-base text-black p-10 md:px-20 lg:px-32 xl:px-44 gap-5 ${
+            showForecast && "hidden"
+          }`}
         >
           <Info
             title='WIND SPEED'
@@ -178,7 +188,7 @@ function App() {
         </section>
       )}
       {showForecast && (
-        <section className='min-h-screen pt-10 bg-black bg-opacity-80'>
+        <section className='min-h-screen pt-10 bg-black bg-opacity-100'>
           <button
             className='absolute left-5 top-[23rem] text-6xl text-white animate-bounce'
             onClick={() => setShowForecast(!showForecast)}
@@ -244,7 +254,7 @@ function App() {
                           </p>
                         </article>
                         <article className='flex gap-1'>
-                          <h4>Weather:</h4>
+                          <h4 className='text-blue-200'>Weather:</h4>
                           <p className='capitalize'>
                             {accessors.weatherAccessor(
                               tooltipData.nearestDatum.datum
