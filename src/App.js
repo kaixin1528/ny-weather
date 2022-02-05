@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Info from "./components/Info";
 import {
   AnimatedAxis,
@@ -16,20 +16,10 @@ function App() {
   const [showForecast, setShowForecast] = useState(false);
   const [currentWeather, setCurrentWeather] = useState([]);
   const [forecast, setForecast] = useState([]);
+  const infoRef = useRef();
 
   const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=new%20york&units=metric&appid=${process.env.REACT_APP_API_KEY}`;
   const forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=40.71&lon=-74&units=metric&exclude=minutely,hourly&appid=${process.env.REACT_APP_API_KEY}`;
-
-  console.log(process.env.REACT_APP_API_KEY);
-  useEffect(() => {
-    fetch(weatherUrl)
-      .then((res) => res.json())
-      .then((data) => setCurrentWeather(data));
-
-    fetch(forecastUrl)
-      .then((res) => res.json())
-      .then((data) => setForecast(data));
-  }, [weatherUrl, forecastUrl]);
 
   const days = {
     0: "Sunday",
@@ -40,6 +30,16 @@ function App() {
     5: "Friday",
     6: "Saturday",
   };
+
+  useEffect(() => {
+    fetch(weatherUrl)
+      .then((res) => res.json())
+      .then((data) => setCurrentWeather(data));
+
+    fetch(forecastUrl)
+      .then((res) => res.json())
+      .then((data) => setForecast(data));
+  }, [weatherUrl, forecastUrl]);
 
   const high =
     forecast &&
@@ -77,32 +77,6 @@ function App() {
       };
     });
 
-  // const high = weather.query.results.channel.item.forecast
-  //   .slice(0, 7)
-  //   .map((day) => {
-  //     return {
-  //       x: day.date.slice(0, 6),
-  //       y: Number(day.high),
-  //       high: Number(day.high),
-  //       low: Number(day.low),
-  //       day: day.day,
-  //       weather: day.text,
-  //     };
-  //   });
-
-  // const low = weather.query.results.channel.item.forecast
-  //   .slice(0, 7)
-  //   .map((day) => {
-  //     return {
-  //       x: day.date.slice(0, 6),
-  //       y: Number(day.low),
-  //       high: Number(day.high),
-  //       low: Number(day.low),
-  //       day: day.day,
-  //       weather: day.text,
-  //     };
-  //   });
-
   const accessors = {
     xAccessor: (d) => d.x,
     yAccessor: (d) => d.y,
@@ -112,12 +86,10 @@ function App() {
     weatherAccessor: (d) => d.weather,
   };
 
-  // console.log(forecast.daily);
-
   return (
     <main className='grid font-overpass text-white'>
       {!showForecast && currentWeather && (
-        <section className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[28rem] md:pt-[29rem] lg:pt-[31rem] bg-no-repeat bg-cover bg-main'>
+        <section className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[28rem] md:pt-[29rem] lg:pt-[33rem] bg-no-repeat bg-cover bg-main'>
           <button
             className='absolute right-8 top-[23rem] text-6xl animate-bounce'
             onClick={() => {
@@ -129,7 +101,7 @@ function App() {
           </button>
           {currentWeather && currentWeather.main && (
             <article>
-              <article className='flex font-extralight -mb-36 divide-x-2'>
+              <article className='flex font-extralight -mb-40 divide-x-2'>
                 <h2 className='flex pr-2'>
                   {Math.round(currentWeather.main.temp_min)}{" "}
                   <span className='text-xs'>°</span>
@@ -149,15 +121,22 @@ function App() {
             </article>
           )}
           <button
+            ref={infoRef}
             className='text-xs lg:text-base font-bold mt-12 lg:mt-28 lg:mb-36 py-3 px-5 mx-auto hover:bg-gray-300 bg-white text-black text-opacity-80 rounded-full'
-            onClick={() => setOpenMoreInfo(!openMoreInfo)}
+            onClick={() => {
+              setOpenMoreInfo(!openMoreInfo);
+              infoRef.current.scrollIntoView({ behavior: "smooth" });
+            }}
           >
             SHOW {openMoreInfo ? "LESS" : "MORE"}
           </button>
         </section>
       )}
       {openMoreInfo && currentWeather && (
-        <section className='grid md:grid-cols-2 text-base text-black p-10 md:px-20 lg:px-32 xl:px-44 gap-5'>
+        <section
+          ref={infoRef}
+          className='grid md:grid-cols-2 text-base text-black p-10 md:px-20 lg:px-32 xl:px-44 gap-5'
+        >
           <Info
             title='WIND SPEED'
             value={Math.round(currentWeather.wind.speed)}
