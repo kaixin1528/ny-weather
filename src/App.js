@@ -10,6 +10,7 @@ import {
 } from "@visx/xychart";
 
 import { ParentSize } from "@visx/responsive";
+import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
   const [openMoreInfo, setOpenMoreInfo] = useState(false);
@@ -87,60 +88,66 @@ function App() {
 
   return (
     <main className='grid font-overpass text-white'>
-      {!showForecast && currentWeather && (
-        <section className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[28rem] md:pt-[29rem] lg:pt-[33rem] bg-no-repeat bg-cover bg-main'>
-          <button
-            className='absolute right-8 top-[23rem] text-6xl animate-bounce'
-            onClick={() => {
-              setShowForecast(!showForecast);
-              setOpenMoreInfo(false);
-            }}
+      <AnimatePresence initial={false}>
+        {!showForecast && currentWeather && (
+          <motion.section
+            initial={{ x: -300 }}
+            animate={{ x: 0, transition: { duration: 0.4 } }}
+            className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[33rem] bg-no-repeat bg-cover bg-main'
           >
-            &gt;
-          </button>
-          {currentWeather && currentWeather.main && (
-            <article>
-              <article className='flex font-extralight -mb-40 divide-x-2'>
-                <h2 className='flex pr-2'>
-                  {Math.round(currentWeather.main.temp_min)}{" "}
-                  <span className='text-xs'>°</span>
-                </h2>
-                <h2 className='flex pl-2'>
-                  {Math.round(currentWeather.main.temp_max)}{" "}
-                  <span className='text-xs'>°</span>
-                </h2>
+            <button
+              className='absolute right-8 top-[23rem] text-6xl animate-bounce'
+              onClick={() => {
+                setShowForecast(!showForecast);
+                setOpenMoreInfo(false);
+              }}
+            >
+              &gt;
+            </button>
+            {currentWeather && currentWeather.main && (
+              <article>
+                <article className='flex font-extralight lg:text-lg divide-x-2'>
+                  <h2 className='flex pr-2'>
+                    {Math.round(currentWeather.main.temp_min)}{" "}
+                    <span className='text-xs'>°</span>
+                  </h2>
+                  <h2 className='flex pl-2'>
+                    {Math.round(currentWeather.main.temp_max)}{" "}
+                    <span className='text-xs'>°</span>
+                  </h2>
+                </article>
+                <h1 className='flex text-8xl lg:text-9xl font-bold'>
+                  {Math.round(currentWeather.main.temp)}{" "}
+                  <span className='text-xl'>°C</span>
+                </h1>
+                <p className='text-xl font-semibold'>
+                  NOW IN {currentWeather.name.toUpperCase()}, USA
+                </p>
               </article>
-              <h1 className='flex text-8xl lg:text-9xl font-bold mt-40'>
-                {Math.round(currentWeather.main.temp)}{" "}
-                <span className='text-xl'>°C</span>
-              </h1>
-              <p className='text-xl font-semibold'>
-                NOW IN {currentWeather.name.toUpperCase()}, USA
-              </p>
-            </article>
-          )}
-          <button
-            className='text-xs lg:text-base font-bold mt-12 lg:mt-28 lg:mb-36 py-3 px-5 mx-auto hover:bg-gray-300 bg-white text-black text-opacity-80 rounded-full'
-            onClick={() => {
-              setOpenMoreInfo(!openMoreInfo);
-              if (openMoreInfo) {
-                window.scrollTo({
-                  left: 0,
-                  top: 0,
-                  behavior: "smooth",
-                });
-              } else
-                window.scrollTo({
-                  left: 0,
-                  top: window.innerHeight,
-                  behavior: "smooth",
-                });
-            }}
-          >
-            SHOW {openMoreInfo ? "LESS" : "MORE"}
-          </button>
-        </section>
-      )}
+            )}
+            <button
+              className='text-xs lg:text-sm mt-12 lg:mt-28 lg:mb-36 py-3 px-5 mx-auto hover:bg-gray-300 bg-white text-black text-opacity-60 rounded-full'
+              onClick={() => {
+                setOpenMoreInfo(!openMoreInfo);
+                if (openMoreInfo) {
+                  window.scrollTo({
+                    left: 0,
+                    top: 0,
+                    behavior: "smooth",
+                  });
+                } else
+                  window.scrollTo({
+                    left: 0,
+                    top: window.innerHeight,
+                    behavior: "smooth",
+                  });
+              }}
+            >
+              SHOW {openMoreInfo ? "LESS" : "MORE"}
+            </button>
+          </motion.section>
+        )}
+      </AnimatePresence>
       {currentWeather && currentWeather.wind && (
         <section
           className={`grid md:grid-cols-2 text-base text-black p-10 md:px-20 lg:px-32 xl:px-44 gap-5 ${
@@ -163,7 +170,7 @@ function App() {
             unit='hPa'
           />
           <article className='grid grid-cols-2 md:grid-cols-1'>
-            <h3 className='text-sm text-black text-opacity-50'>
+            <h3 className='text-xs md:text-sm text-black text-opacity-50'>
               SUNRISE / SUNSET
             </h3>
             {
@@ -187,89 +194,98 @@ function App() {
           </article>
         </section>
       )}
-      {showForecast && (
-        <section className='min-h-screen pt-10 bg-black bg-opacity-100'>
-          <button
-            className='absolute left-5 top-[23rem] text-6xl text-white animate-bounce'
-            onClick={() => setShowForecast(!showForecast)}
+      <AnimatePresence initial={false}>
+        {showForecast && (
+          <motion.section
+            initial={{ x: 300 }}
+            animate={{ x: 0, transition: { duration: 0.4 } }}
+            className='min-h-screen pt-10 bg-black bg-opacity-80'
           >
-            &lt;
-          </button>
-          <h1 className='text-2xl lg:text-3xl text-center font-bold'>
-            7-Day Forecast
-          </h1>
-          <section className='w-screen h-[38rem] md:px-10'>
-            <ParentSize>
-              {({ width, height }) => (
-                <XYChart
-                  width={width}
-                  height={height}
-                  theme={darkTheme}
-                  xScale={{ type: "band" }}
-                  yScale={{ type: "linear", domain: [-20, 20] }}
-                >
-                  <AnimatedAxis orientation='bottom' />
-                  <AnimatedAxis orientation='right' label='Temperature (°C)' />
-                  <AnimatedGrid columns={false} numTicks={4} />
-                  <AnimatedLineSeries
-                    dataKey='Highest Temperature'
-                    data={high}
-                    {...accessors}
-                  />
-                  <AnimatedLineSeries
-                    dataKey='Lowest Temperature'
-                    data={low}
-                    {...accessors}
-                  />
-                  <Tooltip
-                    snapTooltipToDatumX
-                    snapTooltipToDatumY
-                    showVerticalCrosshair
-                    showSeriesGlyphs
-                    renderTooltip={({ tooltipData }) => (
-                      <section className='grid gap-1'>
-                        <article className='flex gap-1 pb-3'>
-                          <h4>
-                            {accessors.dayAccessor(
-                              tooltipData.nearestDatum.datum
-                            )}
-                          </h4>
-                        </article>
-                        <article className='flex gap-1'>
-                          <h4 className='text-high'>High Temp:</h4>
-                          <p>
-                            {accessors.highAccessor(
-                              tooltipData.nearestDatum.datum
-                            )}{" "}
-                            <span className=''>°C</span>
-                          </p>
-                        </article>
-                        <article className='flex gap-1'>
-                          <h4 className='text-low'>Low Temp:</h4>
-                          <p>
-                            {accessors.lowAccessor(
-                              tooltipData.nearestDatum.datum
-                            )}{" "}
-                            °C
-                          </p>
-                        </article>
-                        <article className='flex gap-1'>
-                          <h4 className='text-blue-200'>Weather:</h4>
-                          <p className='capitalize'>
-                            {accessors.weatherAccessor(
-                              tooltipData.nearestDatum.datum
-                            )}
-                          </p>
-                        </article>
-                      </section>
-                    )}
-                  />
-                </XYChart>
-              )}
-            </ParentSize>
-          </section>
-        </section>
-      )}
+            <button
+              className='absolute left-5 top-[23rem] text-6xl text-white animate-bounce'
+              onClick={() => setShowForecast(!showForecast)}
+            >
+              &lt;
+            </button>
+            <h1 className='text-2xl lg:text-3xl text-center font-bold'>
+              7-Day Forecast
+            </h1>
+            <section className='w-screen h-[42rem] md:px-10'>
+              <ParentSize>
+                {({ width, height }) => (
+                  <XYChart
+                    width={width}
+                    height={height}
+                    theme={darkTheme}
+                    xScale={{ type: "band" }}
+                    yScale={{ type: "linear", domain: [-20, 20] }}
+                  >
+                    <AnimatedAxis orientation='bottom' />
+                    <AnimatedAxis
+                      orientation='right'
+                      label='Temperature (°C)'
+                    />
+                    <AnimatedGrid columns={false} numTicks={4} />
+                    <AnimatedLineSeries
+                      dataKey='Highest Temperature'
+                      data={high}
+                      {...accessors}
+                    />
+                    <AnimatedLineSeries
+                      dataKey='Lowest Temperature'
+                      data={low}
+                      {...accessors}
+                    />
+                    <Tooltip
+                      snapTooltipToDatumX
+                      snapTooltipToDatumY
+                      showVerticalCrosshair
+                      showSeriesGlyphs
+                      renderTooltip={({ tooltipData }) => (
+                        <section className='grid gap-1'>
+                          <article className='flex gap-1 pb-3'>
+                            <h4>
+                              {accessors.dayAccessor(
+                                tooltipData.nearestDatum.datum
+                              )}
+                            </h4>
+                          </article>
+                          <article className='flex gap-1'>
+                            <h4 className='text-high'>High Temp:</h4>
+                            <p>
+                              {accessors.highAccessor(
+                                tooltipData.nearestDatum.datum
+                              )}{" "}
+                              <span className=''>°C</span>
+                            </p>
+                          </article>
+                          <article className='flex gap-1'>
+                            <h4 className='text-low'>Low Temp:</h4>
+                            <p>
+                              {accessors.lowAccessor(
+                                tooltipData.nearestDatum.datum
+                              )}{" "}
+                              °C
+                            </p>
+                          </article>
+                          <article className='flex gap-1'>
+                            <h4 className='text-blue-200'>Weather:</h4>
+                            <p className='capitalize'>
+                              {accessors.weatherAccessor(
+                                tooltipData.nearestDatum.datum
+                              )}
+                            </p>
+                          </article>
+                        </section>
+                      )}
+                    />
+                  </XYChart>
+                )}
+              </ParentSize>
+            </section>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
