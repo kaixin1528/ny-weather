@@ -96,7 +96,7 @@ function App() {
             className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[34rem] bg-no-repeat bg-cover bg-main'
           >
             <button
-              className='absolute right-8 top-[23rem] text-5xl md:text-6xl animate-bounce'
+              className='absolute right-8 top-[25rem] text-5xl md:text-6xl animate-bounce'
               onClick={() => {
                 setShowForecast(!showForecast);
                 setOpenMoreInfo(false);
@@ -202,7 +202,7 @@ function App() {
             className='min-h-screen pt-10 bg-black bg-opacity-80'
           >
             <button
-              className='absolute left-5 top-[23rem] text-5xl md:text-6xl text-white animate-bounce'
+              className='absolute left-5 top-[25rem] text-5xl md:text-6xl text-white animate-bounce'
               onClick={() => setShowForecast(!showForecast)}
             >
               &lt;
