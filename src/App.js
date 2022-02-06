@@ -93,7 +93,7 @@ function App() {
           <motion.section
             initial={{ x: -300 }}
             animate={{ x: 0, transition: { duration: 0.4 } }}
-            className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[36rem] bg-no-repeat bg-cover bg-main'
+            className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[34rem] bg-no-repeat bg-cover bg-main'
           >
             <button
               className='absolute right-8 top-[23rem] text-6xl animate-bounce'
@@ -126,7 +126,7 @@ function App() {
               </article>
             )}
             <button
-              className='text-xs lg:text-sm mt-12 lg:mt-28 lg:mb-36 py-3 px-5 mx-auto hover:bg-gray-300 bg-white text-black text-opacity-60 rounded-full'
+              className='text-xs lg:text-sm mt-12 lg:my-28 py-3 px-5 mx-auto hover:bg-gray-300 bg-white text-black text-opacity-60 rounded-full'
               onClick={() => {
                 setOpenMoreInfo(!openMoreInfo);
                 if (openMoreInfo) {
