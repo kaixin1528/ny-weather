@@ -11,11 +11,7 @@ import {
 
 import { ParentSize } from "@visx/responsive";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  faArrowRight,
-  faArrowLeft,
-  faTemperatureLow,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function App() {
