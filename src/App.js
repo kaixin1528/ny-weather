@@ -11,6 +11,12 @@ import {
 
 import { ParentSize } from "@visx/responsive";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  faArrowRight,
+  faArrowLeft,
+  faTemperatureLow,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function App() {
   const [openMoreInfo, setOpenMoreInfo] = useState(false);
@@ -96,13 +102,13 @@ function App() {
             className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[34rem] bg-no-repeat bg-cover bg-main'
           >
             <button
-              className='absolute right-8 top-[25rem] text-5xl md:text-6xl animate-bounce'
+              className='absolute right-8 top-[25rem] text-4xl md:text-5xl stroke-cyan-500 animate-bounce'
               onClick={() => {
                 setShowForecast(!showForecast);
                 setOpenMoreInfo(false);
               }}
             >
-              &gt;
+              <FontAwesomeIcon icon={faArrowRight} />
             </button>
             {currentWeather && currentWeather.main && (
               <article>
@@ -202,10 +208,10 @@ function App() {
             className='min-h-screen pt-10 bg-black bg-opacity-80'
           >
             <button
-              className='absolute left-5 top-[25rem] text-5xl md:text-6xl text-white animate-bounce'
+              className='absolute left-5 top-[25rem] text-4xl md:text-5xl text-white animate-bounce'
               onClick={() => setShowForecast(!showForecast)}
             >
-              &lt;
+              <FontAwesomeIcon icon={faArrowLeft} />
             </button>
             <h1 className='text-2xl lg:text-3xl text-center font-bold'>
               7-Day Forecast
