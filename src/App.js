@@ -92,7 +92,7 @@ function App() {
         {!showForecast && currentWeather && (
           <motion.section
             initial={{ x: -300 }}
-            animate={{ x: 0, transition: { duration: 0.4 } }}
+            animate={{ x: 0, transition: { duration: 0.3 } }}
             className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[34rem] bg-no-repeat bg-cover bg-main'
           >
             <button
@@ -198,7 +198,7 @@ function App() {
         {showForecast && (
           <motion.section
             initial={{ x: 300 }}
-            animate={{ x: 0, transition: { duration: 0.4 } }}
+            animate={{ x: 0, transition: { duration: 0.3 } }}
             className='min-h-screen pt-10 bg-black bg-opacity-80'
           >
             <button
