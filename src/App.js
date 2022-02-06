@@ -93,7 +93,7 @@ function App() {
           <motion.section
             initial={{ x: -300 }}
             animate={{ x: 0, transition: { duration: 0.4 } }}
-            className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[33rem] bg-no-repeat bg-cover bg-main'
+            className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-44 pt-[30rem] md:pt-[31rem] lg:pt-[36rem] bg-no-repeat bg-cover bg-main'
           >
             <button
               className='absolute right-8 top-[23rem] text-6xl animate-bounce'
