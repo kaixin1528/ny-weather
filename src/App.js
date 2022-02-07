@@ -95,7 +95,7 @@ function App() {
           <motion.section
             initial={{ x: -300 }}
             animate={{ x: 0, transition: { duration: 0.3 } }}
-            className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-56 pt-[30rem] md:pt-[31rem] lg:pt-[34rem] bg-no-repeat bg-cover bg-main'
+            className='lg:grid lg:grid-cols-2 min-h-screen px-10 md:px-20 lg:px-32 xl:px-64 pt-[30rem] md:pt-[31rem] lg:pt-[34rem] bg-no-repeat bg-cover bg-main'
           >
             <button
               className='absolute right-8 top-[25rem] text-3xl md:text-4xl stroke-cyan-500 animate-bounce'
@@ -152,7 +152,7 @@ function App() {
       </AnimatePresence>
       {currentWeather && currentWeather.wind && (
         <section
-          className={`grid md:grid-cols-2 text-base text-black p-10 md:px-20 lg:px-32 xl:px-56 gap-5 ${
+          className={`grid md:grid-cols-2 text-base text-black p-10 md:px-20 lg:px-32 xl:px-64 gap-5 ${
             showForecast && "hidden"
           }`}
         >
