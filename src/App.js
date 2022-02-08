@@ -118,10 +118,15 @@ function App() {
                     <span className='text-xs'>°</span>
                   </h2>
                 </article>
-                <h1 className='flex text-8xl lg:text-9xl font-bold'>
-                  {Math.round(currentWeather.main.temp)}{" "}
-                  <span className='text-xl'>°C</span>
-                </h1>
+                <article className='flex items-center gap-2'>
+                  <h1 className='flex text-8xl lg:text-9xl font-bold'>
+                    {Math.round(currentWeather.main.temp)}{" "}
+                    <span className='text-xl'>°C</span>
+                  </h1>
+                  <h4 className='lg:text-xl font-extralight'>
+                    {currentWeather.weather[0].main}{" "}
+                  </h4>
+                </article>
                 <p className='text-xl font-semibold'>
                   NOW IN {currentWeather.name.toUpperCase()}, USA
                 </p>
