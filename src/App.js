@@ -107,8 +107,8 @@ function App() {
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
             {currentWeather && currentWeather.main && (
-              <article>
-                <article className='flex font-extralight lg:text-lg divide-x-2'>
+              <article className='flex flex-col gap-2 lg:gap-3'>
+                <article className='flex font-extralight lg:text-xl divide-x-2'>
                   <h2 className='flex pr-2'>
                     {Math.round(currentWeather.main.temp_min)}{" "}
                     <span className='text-xs'>°</span>
